@@ -33,9 +33,11 @@ class BrowserDriver(Driver):
 
         try:
             if self.browser == "firefox":
-                # TODO : firefox는 추가적인 옵션이 존재
-                self.__driver = webdriver.Firefox(executable_path=driver_path,
-                                                  firefox_options=self.options)
+                cap = DesiredCapabilities().FIREFOX
+                cap["marionette"] = True
+                binary = FirefoxBinary("/usr/bin/firefox")
+                self.__options.binary = binary
+                self.__driver = webdriver.Firefox(firefox_options=self.__options, capabilities=cap, executable_path="./geckodriver"
             elif self.browser == "chrome":
                 self.__driver = webdriver.Chrome(executable_path=driver_path,
                                                  chrome_options=self.options)
